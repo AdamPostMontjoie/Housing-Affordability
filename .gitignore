@@ -1,0 +1,5 @@
+./venv/
+.vscode/
+csv/
+python-pipeline/.env
+.DS_Store
