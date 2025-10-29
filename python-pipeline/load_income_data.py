@@ -39,7 +39,6 @@ supabase: Client = create_client(url, key)
 
 # 2. Convert the DataFrame to a list of dictionaries
 data_to_insert = income_data.to_dict('records')
-
 #Insert raw data
 try:
     load_response = supabase.table("raw_income_data").insert(data_to_insert).execute()

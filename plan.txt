@@ -1,14 +1,9 @@
-Core things to include
-- ELT pipeline
-  Extract(EL) from csv and load to sql
-  Run sql query(T) to create monthly average
-Data analyst/engineering stuff
-Goals
--setup supabase and python raw csv loader
-    -Structure data with Star Schema with fact tables for housing and income
--implement elt pattern
-    -Done in one file, loads raw csv file into table and then runs monthly query
--figure out pandas and anaylsis
--build flask backend to load Data
--create react frontend
+Plan (overall)
+-Gather income, housing(rentals too?) and permitting data
+-determine plan for displaying/comparing data, define supabase tables
+-create flask or fast backend
+-create pretty react frontend with map
 
+After completion
+-post to YIMBY accounts on twitter, see if anyone likes it 
+-If it gathers any interest, use it

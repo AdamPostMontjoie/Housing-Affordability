@@ -23,8 +23,22 @@ raw_data = supabase.table("raw_income_data") \
             .order("observation_date") \
             .execute()
 df = pd.DataFrame(raw_data.data)
-df['observation_date'] = pd.to_datetime(df['observation_date'])
 
-df = df.set_index('')
+# use ts to get state names (change name of usa by reinserting to supabase)
+cleaned_string = df['source_file'].str.replace("income", "").str.replace(".csv", "")
+df['name'] = cleaned_string
+df = df.drop(columns=['source_file'])
 
+#replace with specific year
+date = pd.to_datetime(df['observation_date']).dt.year
+df['year'] = date
+df = df.drop(columns=['observation_date'])
+
+
+data_to_insert = df.to_dict('records')
+try:
+    load_response = supabase.table('fact_income').insert(data_to_insert).execute()
+    print(f"successful insertion of {cleaned_string.iloc[0]}")
+except Exception as e:
+    print(e)
 
