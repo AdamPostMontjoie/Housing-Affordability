@@ -30,8 +30,8 @@ df['name'] = cleaned_string
 df = df.drop(columns=['source_file'])
 
 #replace with specific year
-date = pd.to_datetime(df['observation_date']).dt.year
-df['year'] = date
+year = pd.to_datetime(df['observation_date']).dt.year
+df['year'] = year
 df = df.drop(columns=['observation_date'])
 
 

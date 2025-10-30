@@ -13,7 +13,7 @@ parser.add_argument("-f", "--file",
                     help="Path to the input CSV file", 
                     required=True)
 parser.add_argument("-id", "--location_id", 
-                    help="The id of the state", #0 for usa, 1-50 for states in order of joining union 51 for DC
+                    help="The id of the state", 
                     required=True)
 
 args = parser.parse_args()
