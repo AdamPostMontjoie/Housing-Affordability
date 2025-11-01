@@ -1,17 +1,12 @@
 
-import MarkerTemplateMaps from './components/map'
-import Navbar from './components/navbar'
+
 
 import './index.css'
 function App() {
 
   return (
-    <div className="w-full min-h-screen bg-gray-100 overflow-x-hidden">
-      <Navbar/>
-
-        <div >
-          <MarkerTemplateMaps/>
-        </div>
+    <div>
+      <h1>Starting fresh. Make nice input form |region,year, month| and display data. use recharts </h1>
     </div>
   )
 }
