@@ -1,22 +1,28 @@
 import * as React from "react";
-import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
+import { MapsComponent, LayersDirective, LayerDirective,Inject,MapsTooltip, Highlight} from '@syncfusion/ej2-react-maps';
 
-// Assumes you moved this to 'src/maps/australia.json'
-import * as australia from '../maps/australia.json';
+import * as usa from '../maps/usa.json';
 
 const SimpleMap = () => {
     return (
         // Make sure this component has a defined height, 
         // e.g., by giving its parent div a class like 'h-screen'
         <MapsComponent id="maps" zoomSettings={{ enable: true }}>
+            <Inject services={[MapsTooltip,Highlight]} />
             <LayersDirective>
                 <LayerDirective 
-                    shapeData={australia}
-                    // 'shapeSettings' is what gives the map its color
-                    shapeSettings={{ 
-                        autofill: true,
-                        border: { width: 0.5, color: 'white' } 
-                    }} 
+                    shapeData={usa}
+                    shapeSettings={{ fill: '#E5E5E5', border: { color: 'black', width: 0.3 } }}
+                    dataLabelSettings={{ visible: true, labelPath: 'iso_3166_2', smartLabelMode: 'Hide', textStyle: { color: 'black' } }}
+                    tooltipSettings={{
+                        visible: true,
+                        valuePath: 'name'
+                    }}
+                    highlightSettings={{
+                        enable: true,
+                        fill: 'red', 
+                        border: { color: '#333333', width: 1 }
+                    }}
                 />
             </LayersDirective>
         </MapsComponent>
