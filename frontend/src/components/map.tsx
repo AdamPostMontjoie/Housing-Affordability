@@ -1,14 +1,16 @@
-import * as React from "react";
-import { MapsComponent, LayersDirective, LayerDirective,Inject,MapsTooltip, Highlight} from '@syncfusion/ej2-react-maps';
+import { useState } from 'react';
+import { MapsComponent, LayersDirective, LayerDirective,Inject,MapsTooltip, Highlight,Selection} from '@syncfusion/ej2-react-maps';
 
 import * as usa from '../maps/usa.json';
 
 const SimpleMap = () => {
+    //the selected state will be able to be changed from map or from sidebar
+
     return (
         // Make sure this component has a defined height, 
         // e.g., by giving its parent div a class like 'h-screen'
         <MapsComponent id="maps" zoomSettings={{ enable: true }}>
-            <Inject services={[MapsTooltip,Highlight]} />
+            <Inject services={[MapsTooltip,Highlight,Selection]} />
             <LayersDirective>
                 <LayerDirective 
                     shapeData={usa}
@@ -23,6 +25,7 @@ const SimpleMap = () => {
                         fill: 'red', 
                         border: { color: '#333333', width: 1 }
                     }}
+                    selectionSettings={{ enable: true, fill: '#4C515B', opacity: 1 }}
                 />
             </LayersDirective>
         </MapsComponent>
