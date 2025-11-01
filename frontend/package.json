@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@syncfusion/ej2": "^31.2.4",
+    "@syncfusion/ej2-react-grids": "^31.2.4",
     "@syncfusion/ej2-react-maps": "^31.2.2",
     "@tailwindcss/vite": "^4.1.16",
     "react": "^19.1.1",

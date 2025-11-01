@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
 
 // Assumes you moved this to 'src/maps/australia.json'
-import * as australia from '../maps/australia.json'
+import * as australia from '../maps/australia.json';
 
 const SimpleMap = () => {
     return (
