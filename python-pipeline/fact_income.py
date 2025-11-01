@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import argparse
 from supabase import Client, create_client
+from dotenv import load_dotenv
 
 parser = argparse.ArgumentParser(description="Load income data from a CSV.")
 parser.add_argument("-id", "--location_id", 
@@ -12,8 +13,9 @@ parser.add_argument("-id", "--location_id",
 args = parser.parse_args()
 location_id = args.location_id
 
-url = "https://scazzvmwfjjyrbmitrfx.supabase.co"
-key = "sb_secret_B4qyWkXFNv9uazN1bh0H7g_PWZ1GlfP" # This looks like your service key
+url = os.getenv("SUPABASE_URL")
+key = os.getenv("SUPABASE_KEY")
+
 
 supabase: Client = create_client(url, key)
 

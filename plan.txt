@@ -1,9 +1,0 @@
-Plan (overall)
--Gather income, housing(rentals too?) and permitting data
--determine plan for displaying/comparing data, define supabase tables
--create flask or fast backend
--create pretty react frontend with map
-
-After completion
--post to YIMBY accounts on twitter, see if anyone likes it 
--If it gathers any interest, use it

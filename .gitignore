@@ -2,4 +2,5 @@
 .vscode/
 csv/
 python-pipeline/.env
+backend/.env
 .DS_Store
