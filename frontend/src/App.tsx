@@ -4,13 +4,14 @@ import axios from 'axios'
 import Chart from './Chart'
 import './index.css'
 import DataForm from './DataForm'
+import InfoModal from './InfoModal'
 
 function App() {
   const[locationData,setLocationData] = useState()
   //state controlled by control panel and prop drilled
   const[locationId,setLocationId] = useState(0)
   const [chartDisplay,setChartDisplay] = useState(0)
-  const [yearValue, setYearValue] = useState(25);
+  const [yearValue, setYearValue] = useState(24);
   const [monthValue, setMonthValue] = useState(12);
   const [displayIncome, setDisplayIncome] = useState(true)
   const [displayHousing, setDisplayHousing] = useState(true)
@@ -24,7 +25,7 @@ function App() {
         const response = await axios.get(`http://localhost:8000/location/?location_id=${locationId}`)
         //transform data into format for recharts first
         //chart will flip between displaying afforability, income, and housing price, and all 3
-        
+        console.log(response.data)
         setLocationData(response.data)
       } catch(error){
         console.log(error)
@@ -32,6 +33,9 @@ function App() {
     }
     getLocationData(locationId)
   },[locationId])
+
+  //onchange of location, year, or month fetch proper data
+
 
   return (
     <div className="flex flex-row p-8 space-x-8 min-h-screen bg-gray-100">
@@ -52,9 +56,8 @@ function App() {
         />
       </div>
       <div className="flex-1">
-        <Chart/>
+        <Chart locationData={locationData} displayIncome={displayIncome} displayHousing={displayHousing}/>
       </div>
-
     </div>
   )
 }

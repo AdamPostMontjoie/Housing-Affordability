@@ -1,0 +1,6 @@
+about the data
+the data for the real median household income was taken from the Federal Reserve Economic Data distributed by the Federal Reserve Bank of St. Louis
+the data for the housing prices was taken from the zillow home value index
+How is affordability calculated?
+The old school recommendation is that a house costs between 3 to 5 times your yearly income. 
+to calculate the affordability at a time, i compared the home value in an area with the median household income
