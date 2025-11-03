@@ -1,4 +1,3 @@
-import React from 'react';
 
 // Define the props the modal will accept
 
@@ -30,7 +29,7 @@ const InfoModal = ({ isOpen, onClose }:{isOpen:boolean,onClose:()=>void}) => {
             The data for the real median household income was taken from the Federal Reserve Economic Data (FRED) distributed by the Federal Reserve Bank of St. Louis.
           </p>
           <p>
-            The data for the housing prices was taken from the Zillow Home Value Index (ZHVI).
+            The data for the housing prices was taken from the Zillow Home Value Index (ZHVI) created by Zillow Research.
           </p>
          <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">How is affordability calculated?</h3>
@@ -47,7 +46,7 @@ const InfoModal = ({ isOpen, onClose }:{isOpen:boolean,onClose:()=>void}) => {
           <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Data Links</h3>
             <ul className="list-disc list-inside space-y-1">
-              <li><a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">FRED Median Household Income</a></li>
+              <li><a href="https://fred.stlouisfed.org/release/tables?rid=249&eid=259515#snid=259516" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">FRED Median Household Income</a></li>
               <li><a href="https://www.zillow.com/research/data/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Zillow Home Value Index</a></li>
             </ul>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Personal Links</h3>

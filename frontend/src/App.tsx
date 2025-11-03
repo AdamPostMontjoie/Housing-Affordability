@@ -4,18 +4,15 @@ import axios from 'axios'
 import Chart from './Chart'
 import './index.css'
 import DataForm from './DataForm'
-import InfoModal from './InfoModal'
 
 function App() {
   const[locationData,setLocationData] = useState()
   //state controlled by control panel and prop drilled
   const[locationId,setLocationId] = useState(0)
-  const [chartDisplay,setChartDisplay] = useState(0)
   const [yearValue, setYearValue] = useState(24);
   const [monthValue, setMonthValue] = useState(12);
   const [displayIncome, setDisplayIncome] = useState(true)
   const [displayHousing, setDisplayHousing] = useState(true)
-  const [displayAffordability, setDisplayAffordability] = useState(true)
 
   //get data from backend once on page load, default as United States
   useEffect(()=>{
@@ -51,8 +48,6 @@ function App() {
           setDisplayIncome={setDisplayIncome}
           displayHousing={displayHousing}
           setDisplayHousing={setDisplayHousing}
-          displayAffordability={displayAffordability}
-          setDisplayAffordability={setDisplayAffordability}
         />
       </div>
       <div className="flex-1">

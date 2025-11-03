@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import { locationNames,locations,months} from './names';
 import InfoModal from './InfoModal';
 // You would replace this with data fetched from your backend or a file
 
 
 
-const DataForm = ({yearValue,setYearValue,monthValue,setMonthValue,setLocationId,locationData,displayIncome,setDisplayIncome,displayHousing,setDisplayHousing,displayAffordability,setDisplayAffordability}:
+const DataForm = ({yearValue,setYearValue,monthValue,setMonthValue,setLocationId,locationData,displayIncome,setDisplayIncome,displayHousing,setDisplayHousing}:
   {yearValue:number,setYearValue:(n:number)=>void,monthValue:number,setMonthValue:(n:number)=>void,setLocationId:(n:number)=>void,locationData:any,
-    displayIncome:boolean,setDisplayIncome:(b:boolean)=>void,displayHousing:boolean,setDisplayHousing:(b:boolean)=>void,displayAffordability:boolean,setDisplayAffordability:(b:boolean)=>void}) => {
+    displayIncome:boolean,setDisplayIncome:(b:boolean)=>void,displayHousing:boolean,setDisplayHousing:(b:boolean)=>void}) => {
   // --- State to manage form inputs ---
   const [selectedState, setSelectedState] = useState('');
   const [dataOnDate,setDataOnDate] = useState<any>()
