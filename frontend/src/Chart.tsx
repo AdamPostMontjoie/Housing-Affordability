@@ -1,0 +1,55 @@
+import { months } from './names';
+import React from 'react';
+import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line } from 'recharts';
+
+const Chart = React.memo(({ locationData, displayIncome, displayHousing }: { locationData: any, displayIncome:boolean, displayHousing:boolean}) => {
+    const formattedData = React.useMemo(() => {
+    if (!locationData) return [];
+    return locationData.map((d:any) => ({
+      ...d,
+      date: `${d.year}-${String(d.month).padStart(2, '0')}`
+    }));
+  }, [locationData]);
+
+  const formatXAxis = (tickItem: string) => {
+    // tickItem will be "2020-01", "2020-02", etc.
+    const month = tickItem.substring(5, 7);
+
+    // 3. Only return a label if it's January (the first month of the year)
+    if (month === '01') {
+      return tickItem.substring(0, 4); // Return "2020"
+    }
+    return ''; // Return an empty string for all other months
+  };
+  return (
+    <div>
+      <LineChart
+        style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
+        responsive
+        data={formattedData}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis interval={23} dataKey="date" tickFormatter={formatXAxis}/>
+        <YAxis width="auto" />
+        <Tooltip/>
+        <Legend />
+        {displayIncome && (
+            <Line type="monotone" dot={false} dataKey="income" stroke="#8884d8"  />
+        )}
+        {displayHousing && (
+            <Line type="monotone" dot={false} dataKey="price" stroke="#82ca9d" />
+        )}
+        
+        
+      </LineChart>
+    </div>
+  )
+})
+export default Chart
+

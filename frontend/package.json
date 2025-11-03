@@ -14,8 +14,10 @@
     "@syncfusion/ej2-react-grids": "^31.2.4",
     "@syncfusion/ej2-react-maps": "^31.2.2",
     "@tailwindcss/vite": "^4.1.16",
+    "axios": "^1.13.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "recharts": "^3.3.0",
     "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
@@ -30,6 +32,6 @@
     "globals": "^16.4.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
-    "vite": "^7.1.7"
+    "vite": "^7.1.12"
   }
 }

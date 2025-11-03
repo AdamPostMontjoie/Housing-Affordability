@@ -32,5 +32,6 @@ async def read_affordability(location_id: int):
     affordability_response = supabase.table('fact_affordability') \
                                     .select('affordability_value','price','income','year','month','name') \
                                     .eq('location_id',location_id) \
+                                    .neq('year',2025) \
                                     .execute()
     return affordability_response.data
