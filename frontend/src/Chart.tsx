@@ -7,6 +7,7 @@ const Chart = React.memo(({ locationData, displayIncome, displayHousing }: { loc
     if (!locationData) return [];
     return locationData.map((d:any) => ({
       ...d,
+      price: (d.price !== null && d.price !== undefined) ? parseFloat(d.price.toFixed(2)) : null,
       date: `${d.year}-${String(d.month).padStart(2, '0')}`
     }));
   }, [locationData]);
