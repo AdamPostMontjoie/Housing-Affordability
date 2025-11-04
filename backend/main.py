@@ -11,7 +11,8 @@ app = FastAPI()
 origins = [
     "http://localhost:5173", 
     "http://127.0.0.1:5173",
-    "https://housing-affordability.vercel.app"
+    "https://housing-affordability.vercel.app",
+    "https://housing-affordability-jj7qhkum9-adampostmontjoies-projects.vercel.app"
 ]
 
 app.add_middleware(
