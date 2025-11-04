@@ -1,6 +1,5 @@
 import { useEffect,useState } from 'react'
 import axios from 'axios'
-
 import Chart from './Chart'
 import './index.css'
 import DataForm from './DataForm'
@@ -19,7 +18,8 @@ function App() {
     async function getLocationData(locationId:number){
       try{
         console.log("tried")
-        const response = await axios.get(`http://localhost:8000/location/?location_id=${locationId}`)
+        const api = import.meta.env.VITE_BACKEND_URL
+        const response = await axios.get(`${api}/location/?location_id=${locationId}`)
         //transform data into format for recharts first
         //chart will flip between displaying afforability, income, and housing price, and all 3
         console.log(response.data)
