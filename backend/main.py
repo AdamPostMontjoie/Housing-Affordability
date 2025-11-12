@@ -5,10 +5,11 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import re
+from dotenv import load_dotenv
 
 app = FastAPI()
 allowed_origin_regex = r"^(https?://localhost:\d+|https://housing-affordability.*\.vercel\.app)$"
-
+load_dotenv()
 
 
 app.add_middleware(
@@ -30,7 +31,7 @@ def read_root():
 @app.get("/location")
 async def read_affordability(location_id: int):
     affordability_response = supabase.table('fact_affordability') \
-                                    .select('affordability_value','price','income','year','month','name') \
+                                    .select('affordability_value','price','income','year','month','name', 'five_year_rolling_income','five_year_rolling_price','five_year_volatility_income','five_year_volatility_price') \
                                     .eq('location_id',location_id) \
                                     .neq('year',2025) \
                                     .execute()

@@ -1,32 +1,48 @@
-
 import React from 'react';
 import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line } from 'recharts';
+import { useDashboard } from './context/DashboardContext';
 
-const Chart = React.memo(({ locationData, displayIncome, displayHousing }: { locationData: any, displayIncome:boolean, displayHousing:boolean}) => {
+
+const Chart = () => {
+
+    const {state} = useDashboard();
     const formattedData = React.useMemo(() => {
+    let locationData = state.locationData
     if (!locationData) return [];
+    
+    // Convert data to numbers and format it for the chart
     return locationData.map((d:any) => ({
       ...d,
-      price: (d.price !== null && d.price !== undefined) ? parseFloat(d.price.toFixed(2)) : null,
-      date: `${d.year}-${String(d.month).padStart(2, '0')}`
+      housing_price: (d.price !== null && d.price !== undefined) ? parseFloat(d.price.toFixed(2)) : null,
+      date: `${d.year}-${String(d.month).padStart(2, '0')}`,
+      
+      rolling_average_income: (d.five_year_rolling_income !== null && d.five_year_rolling_income !== undefined) 
+        ? parseFloat(d.five_year_rolling_income.toFixed(2)) 
+        : null,
+      income_volatility: (d.five_year_volatility_income !== null && d.five_year_volatility_income !== undefined) 
+        ? parseFloat(d.five_year_volatility_income.toFixed(2)) 
+        : null,
+      rolling_average_housing_price: (d.five_year_rolling_price !== null && d.five_year_rolling_price !== undefined) 
+        ? parseFloat(d.five_year_rolling_price.toFixed(2)) 
+        : null,
+      housing_volatility: (d.five_year_volatility_price !== null && d.five_year_volatility_price !== undefined) 
+        ? parseFloat(d.five_year_volatility_price.toFixed(2)) 
+        : null,
     }));
-  }, [locationData]);
+  }, [state.locationData]);
 
   const formatXAxis = (tickItem: string) => {
-    // tickItem will be "2020-01", "2020-02", etc.
     const month = tickItem.substring(5, 7);
 
-    // 3. Only return a label if it's January (the first month of the year)
     if (month === '01') {
-      return tickItem.substring(0, 4); // Return "2020"
+      return tickItem.substring(0, 4);
     }
-    return ''; // Return an empty string for all other months
+    return '';
   };
   return (
     <div>
       <LineChart
         style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
-        responsive
         data={formattedData}
         margin={{
           top: 5,
@@ -37,20 +53,38 @@ const Chart = React.memo(({ locationData, displayIncome, displayHousing }: { loc
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis interval={23} dataKey="date" tickFormatter={formatXAxis}/>
-        <YAxis width="auto" />
-        <Tooltip/>
+        <YAxis 
+          width={80} // Give Y-axis a bit more space
+          tickFormatter={(value) => `$${new Intl.NumberFormat('en-US').format(value)}`} // Format ticks as currency
+        />
+        <Tooltip formatter={(value: number) => `$${new Intl.NumberFormat('en-US').format(value)}`} />
         <Legend />
-        {displayIncome && (
-            <Line type="monotone" dot={false} dataKey="income" stroke="#8884d8"  />
+
+  
+        {state.displayIncome && state.displayReal && (
+            <Line type="monotone" dot={false} dataKey="income" name="Income (Real)" stroke="#8884d8"  />
         )}
-        {displayHousing && (
-            <Line type="monotone" dot={false} dataKey="price" stroke="#82ca9d" />
+        {state.displayHousing && state.displayReal && (
+            <Line type="monotone" dot={false} dataKey="housing_price" name="Housing Price (Real)" stroke="#82ca9d" />
+        )}
+
+        {state.displayIncome && state.displayRollingAverage && (
+            <Line type="monotone" dot={false} dataKey="rolling_average_income" name="Income (Rolling Avg)" stroke="#ffc658"  />
+        )}
+        {state.displayHousing && state.displayRollingAverage && (
+            <Line type="monotone" dot={false} dataKey="rolling_average_housing_price" name="Housing (Rolling Avg)" stroke="#ff7300" />
+        )}
+
+        {state.displayIncome && state.displayVolatility && (
+            <Line type="monotone" dot={false} dataKey="income_volatility" name="Income (Volatility)" stroke="#3498db"  />
+        )}
+        {state.displayHousing && state.displayVolatility && (
+            <Line type="monotone" dot={false} dataKey="housing_volatility" name="Housing (Volatility)" stroke="#e74c3c" />
         )}
         
         
       </LineChart>
     </div>
   )
-})
+}
 export default Chart
-
