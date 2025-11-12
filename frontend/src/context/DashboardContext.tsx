@@ -91,11 +91,11 @@ function dashboardReducer(state: State, action: Action): State {
     case 'TOGGLE_HOUSING':
       return { ...state, displayHousing: !state.displayHousing };
     case 'TOGGLE_REAL':
-      return { ...state, displayReal: true, displayRollingAverage:false,displayVolatility:false};
+      return { ...state, displayReal: !state.displayReal};
     case 'TOGGLE_ROLLING_AVERAGE':
-      return { ...state, displayRollingAverage:true,displayReal: false,displayVolatility:false};
+      return { ...state, displayRollingAverage: !state.displayRollingAverage};
     case 'TOGGLE_VOLATILITY':
-      return { ...state, displayVolatility: true, displayRollingAverage:false,displayReal: false,};
+      return { ...state, displayVolatility: !state.displayVolatility};
 
     // --- Data Fetching Actions ---
     case 'FETCH_DATA_START':

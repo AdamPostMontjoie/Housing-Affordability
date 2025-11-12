@@ -181,37 +181,37 @@ const DataForm = () => {
             <div className="flex items-center">
               <input
                 id="new-builds"
-                type="radio"
+                type="checkbox"
                 checked={displayReal}
                 onChange={(e) => dispatch({type:"TOGGLE_REAL"})}
                 className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
               />
               <label htmlFor="new-builds" className="ml-3 block text-sm text-gray-800">
-                Real
+                Real Data
               </label>
             </div>
             <div className="flex items-center">
               <input
                 id="new-builds"
-                type="radio"
+                type="checkbox"
                 checked={displayRollingAverage}
                 onChange={(e) => dispatch({type:"TOGGLE_ROLLING_AVERAGE"})}
                 className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
               />
               <label htmlFor="new-builds" className="ml-3 block text-sm text-gray-800">
-                Rolling Average
+                Five Year Rolling Average
               </label>
             </div>
             <div className="flex items-center">
               <input
                 id="new-builds"
-                type="radio"
+                type="checkbox"
                 checked={displayVolatility}
                 onChange={(e) => dispatch({type:"TOGGLE_VOLATILITY"})}
                 className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
               />
               <label htmlFor="new-builds" className="ml-3 block text-sm text-gray-800">
-                Volatility
+                Five Year Rolling Volatility
               </label>
             </div>
           </div>
