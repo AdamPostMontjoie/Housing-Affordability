@@ -1,16 +1,21 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line } from 'recharts';
+import { useDashboard } from './context/DashboardContext';
 
-const Chart = React.memo(({ locationData, displayIncome, displayHousing }: { locationData: any, displayIncome:boolean, displayHousing:boolean}) => {
+
+const Chart = () => {
+
+    const {state} = useDashboard();
     const formattedData = React.useMemo(() => {
+    let locationData = state.locationData
     if (!locationData) return [];
     return locationData.map((d:any) => ({
       ...d,
       price: (d.price !== null && d.price !== undefined) ? parseFloat(d.price.toFixed(2)) : null,
       date: `${d.year}-${String(d.month).padStart(2, '0')}`
     }));
-  }, [locationData]);
+  }, [state.locationData]);
 
   const formatXAxis = (tickItem: string) => {
     // tickItem will be "2020-01", "2020-02", etc.
@@ -40,17 +45,23 @@ const Chart = React.memo(({ locationData, displayIncome, displayHousing }: { loc
         <YAxis width="auto" />
         <Tooltip/>
         <Legend />
-        {displayIncome && (
+        {state.displayIncome&& state.displayReal && (
             <Line type="monotone" dot={false} dataKey="income" stroke="#8884d8"  />
         )}
-        {displayHousing && (
+        {state.displayHousing && state.displayReal && (
             <Line type="monotone" dot={false} dataKey="price" stroke="#82ca9d" />
+        )}
+        {state.displayIncome&& state.displayRollingAverage && (
+            <Line type="monotone" dot={false} dataKey="five_year_rolling_income" stroke="#8884d8"  />
+        )}
+        {state.displayHousing && state.displayRollingAverage && (
+            <Line type="monotone" dot={false} dataKey="five_year_rolling_price" stroke="#82ca9d" />
         )}
         
         
       </LineChart>
     </div>
   )
-})
+}
 export default Chart
 

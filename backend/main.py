@@ -5,10 +5,11 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import re
+from dotenv import load_dotenv
 
 app = FastAPI()
 allowed_origin_regex = r"^(https?://localhost:\d+|https://housing-affordability.*\.vercel\.app)$"
-
+load_dotenv()
 
 
 app.add_middleware(
@@ -34,5 +35,4 @@ async def read_affordability(location_id: int):
                                     .eq('location_id',location_id) \
                                     .neq('year',2025) \
                                     .execute()
-
     return affordability_response.data
