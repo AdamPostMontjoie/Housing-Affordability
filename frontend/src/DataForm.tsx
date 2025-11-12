@@ -37,6 +37,7 @@ const DataForm = ({yearValue,setYearValue,monthValue,setMonthValue,setLocationId
     }
     onDate()
   },[yearValue,monthValue,locationData])
+
   const getAffordabilityColor = () => {
     switch (affordable) {
       case "Highly Affordable":
@@ -141,7 +142,7 @@ const DataForm = ({yearValue,setYearValue,monthValue,setMonthValue,setLocationId
               
             </div>
           )}
-        {/* pick categories displayed */}
+        {/* select housing and/or price */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Chart Values</label>
           <div className="mt-2 space-y-2">
@@ -169,9 +170,6 @@ const DataForm = ({yearValue,setYearValue,monthValue,setMonthValue,setLocationId
                 Display Housing Price
               </label>
             </div>
-
-            
-
           </div>
         </div>
         

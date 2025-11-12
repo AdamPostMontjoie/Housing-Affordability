@@ -12,6 +12,10 @@ function App() {
   const [monthValue, setMonthValue] = useState(12);
   const [displayIncome, setDisplayIncome] = useState(true)
   const [displayHousing, setDisplayHousing] = useState(true)
+  //real income and housing values
+  const [displayReal,setDisplayReal] = useState(true)
+  const [displayRollingAverage, setDisplayRollingAverage] = useState(false)
+  const [displayVolatility, setDisplayVolatility] = useState(false)
 
   //get data from backend once on page load, default as United States
   useEffect(()=>{
@@ -51,7 +55,7 @@ function App() {
         />
       </div>
       <div className="flex-1">
-        <Chart locationData={locationData} displayIncome={displayIncome} displayHousing={displayHousing}/>
+        <Chart locationData={locationData} displayIncome={displayIncome} displayHousing={displayHousing} />
       </div>
     </div>
   )

@@ -30,8 +30,9 @@ def read_root():
 @app.get("/location")
 async def read_affordability(location_id: int):
     affordability_response = supabase.table('fact_affordability') \
-                                    .select('affordability_value','price','income','year','month','name') \
+                                    .select('affordability_value','price','income','year','month','name', 'five_year_rolling_income','five_year_rolling_price','five_year_volatility_income','five_year_volatility_price') \
                                     .eq('location_id',location_id) \
                                     .neq('year',2025) \
                                     .execute()
+
     return affordability_response.data
