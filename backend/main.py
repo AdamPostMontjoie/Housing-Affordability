@@ -5,11 +5,9 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import re
-from dotenv import load_dotenv
 
 app = FastAPI()
 allowed_origin_regex = r"^(https?://localhost:\d+|https://housing-affordability.*\.vercel\.app)$"
-load_dotenv()
 
 
 app.add_middleware(
