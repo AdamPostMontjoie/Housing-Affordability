@@ -1,5 +1,4 @@
-import { useEffect,useState } from 'react'
-import axios from 'axios'
+
 import Chart from './Chart'
 import './index.css'
 import DataForm from './DataForm'
