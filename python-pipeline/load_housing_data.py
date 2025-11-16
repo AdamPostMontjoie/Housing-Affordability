@@ -9,7 +9,7 @@ import numpy as np
 load_dotenv()
 
 #command line file arguments
-parser = argparse.ArgumentParser(description="Load income data from a CSV.")
+parser = argparse.ArgumentParser(description="Load housing data from a CSV.")
 parser.add_argument("-f", "--file", 
                     help="Path to the input CSV file", 
                     required=True)
@@ -25,9 +25,8 @@ except Exception as e:
     print(f"Error reading CSV: {e}")
     sys.exit(1)
 
-# 2. (T1) Transform: "Melt" the data
-#    This is the magic. It takes all columns *except* 'date'
-#    and "unpivots" them.
+# 2. Melt the data
+
 df_long = pd.melt(
     df_wide,
     id_vars=['date'],             # The column(s) to keep as-is
@@ -44,6 +43,7 @@ df_long.replace(np.nan, None, inplace=True)
 
 # file name
 df_long['source_file'] = filename
+
 
 raw_data_to_insert = df_long.to_dict('records')
 
