@@ -37,22 +37,14 @@ async def read_affordability(location_id: int):
                                     .execute()
     return affordability_response.data
 
-@app.get("/affordable")
-async def find_affordable_states(income:float,month:int,year:int):
+@app.get('/fixed_mortgage')
+async def fixed_mortgage(income:float,down_payment:int,loan_years:int):
     params_to_send = {
-            'param_income': income,
-            'param_year': year,
-            'param_month': month
+            'param_income':income,
+            'param_down_payment':down_payment,
+            'param_loan_years':loan_years
         }
-    response = supabase.rpc('find_affordable_states',params_to_send).execute()
+    response = supabase.rpc('find_fixed_mortgage',params_to_send).execute()
     return response.data
 
-@app.get("/unaffordable")
-async def find_unaffordable_states(income:float,month:int,year:int):
-    params_to_send = {
-            'param_income': income,
-            'param_year': year,
-            'param_month': month
-    }
-    response = supabase.rpc('find_unaffordable_states',params_to_send).execute()
-    return response.data
+
