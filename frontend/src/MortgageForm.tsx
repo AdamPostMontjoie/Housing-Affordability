@@ -24,25 +24,21 @@ type ApiResponse = {
   unaffordable_states: StateMetric[];
 };
 
-/**
- * A component to calculate housing affordability based on user inputs.
- */
-const AffordabilityCalculator = () => {
-  // --- State for Inputs ---
+
+const MortgageCalculator = () => {
+  //inputs
   const [income, setIncome] = useState('');
   const [downPayment, setDownPayment] = useState('');
   const [loanYears, setLoanYears] = useState('30'); // Default to 30 years
 
-  // --- State for API Results ---
+  //api results
   const [results, setResults] = useState<ApiResponse | null>(null)
   const [affordableStates, setAffordableStates] = useState<StateMetric[]>([]);
   const [unaffordableStates, setUnaffordableStates] = useState<StateMetric[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  /**
-   * Handles the form submission.
-   */
+  //on submission call the backend to get data
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -75,7 +71,7 @@ const AffordabilityCalculator = () => {
   return (
     // Style: Using the same container style as DataForm.tsx
     <div className="p-8 bg-white rounded-lg shadow-md w-full">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Affordability Calculator</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Mortgage Calculator</h2>
       
       {/* Input Bar */}
       <form onSubmit={handleSubmit} className="space-y-4 mb-8">
@@ -95,7 +91,6 @@ const AffordabilityCalculator = () => {
             />
           </div>
 
-          {/* Input: Down Payment */}
           <div className="flex-1">
             <label htmlFor="down_payment" className="block text-sm font-medium text-gray-700">Down Payment ($)</label>
             <input
@@ -109,7 +104,6 @@ const AffordabilityCalculator = () => {
             />
           </div>
 
-          {/* Input: Mortgage Term */}
           <div className="flex-1">
             <label htmlFor="loan_years" className="block text-sm font-medium text-gray-700">Mortgage Term</label>
             <select
@@ -124,7 +118,6 @@ const AffordabilityCalculator = () => {
             </select>
           </div>
 
-          {/* Button: Submit */}
           <div className="flex-shrink-0">
             <button
               type="submit"
@@ -161,10 +154,10 @@ const AffordabilityCalculator = () => {
 
 
 const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }) => {
-  
 
   let headers = states.length > 0 ? Object.keys(states[0]) : [];
   headers = headers.filter(h => h != "year" && h !="month")
+  
   // Helper to format values for display
   const formatValue = (value: any) => {
     if (typeof value === 'boolean') {
@@ -177,6 +170,10 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
       }
       // Format currency and other large numbers
       return value.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    }
+    //format state names
+    if(typeof value == 'string'){
+
     }
     return value;
   };
@@ -198,7 +195,7 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    {/* Just render the header name as-is from the API */}
+                    {/*  Render headers as column */}
                     {header.replace(/_/g, ' ')}
                   </th>
                 ))}
@@ -225,4 +222,4 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
   );
 };
 
-export default AffordabilityCalculator;
+export default MortgageCalculator;
