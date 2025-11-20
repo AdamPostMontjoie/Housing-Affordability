@@ -2,6 +2,8 @@
 import Chart from './Chart'
 import './index.css'
 import DataForm from './DataForm'
+import Nav from './Navbar.js'
+import AffordabilityCalculator from './MortgageForm'
 
 function App() {
 
@@ -14,12 +16,14 @@ function App() {
 
   return (
     <div className="flex flex-row p-8 space-x-8 min-h-screen bg-gray-100">
+      <Nav/>
       <div className="w-1/3">
         <DataForm />
       </div>
       <div className="flex-1">
         <Chart />
       </div>
+
     </div>
   )
 }
