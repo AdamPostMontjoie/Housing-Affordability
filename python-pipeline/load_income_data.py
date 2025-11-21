@@ -44,3 +44,20 @@ try:
     load_response = supabase.table("raw_income_data").insert(data_to_insert).execute()
 except Exception as e:
     print(f"Error inserting data: {e}")
+
+cleaned_string = income_data['source_file'].str.replace("income", "").str.replace(".csv", "")
+income_data['name'] = cleaned_string
+df = income_data.drop(columns=['source_file'])
+
+#replace with specific year
+year = pd.to_datetime(df['observation_date']).dt.year
+df['year'] = year
+df = df.drop(columns=['observation_date'])
+
+
+data_to_insert = df.to_dict('records')
+try:
+    load_response = supabase.table('fact_income').insert(data_to_insert).execute()
+    print(f"successful insertion of {cleaned_string.iloc[0]}")
+except Exception as e:
+    print(e)
