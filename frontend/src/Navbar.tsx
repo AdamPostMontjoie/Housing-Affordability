@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const Navbar = ({toggle,setToggle}:{toggle:boolean, setToggle:(x:boolean)=> void}) => {
   return (
