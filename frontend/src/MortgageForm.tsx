@@ -82,7 +82,7 @@ const MortgageCalculator = () => {
           
           {/* Input: Income */}
           <div className="flex-1">
-            <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income</label>
+            <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income ($)</label>
             <input
               id="income"
               type="number"
@@ -164,17 +164,19 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
   headers = headers.filter(h => h != "year" && h !="month" && h !="location_id")
   
   // Helper to format values for display
-  const formatValue = (value: any,location_id:number) => {
+  const formatValue = (key:any, value: any,location_id:number) => {
     if (typeof value === 'boolean') {
       return value ? 'Yes' : 'No';
     }
+    
+    if (key == "percent_annual_income") {
+        return (value * 100).toFixed(2) + '%';
+      }
     if (typeof value === 'number') {
       // Format percentages
-      if (value > 0 && value < 1) {
-        return (value * 100).toFixed(1) + '%';
-      }
+      
       // Format currency and other large numbers
-      return value.toLocaleString('en-US', { maximumFractionDigits: 2 });
+      return '$'+value.toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
     //format state names
     if(typeof value === 'string'){
@@ -214,7 +216,7 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
                       key={header}
                       className="px-6 py-4 whitespace-nowrap text-sm text-gray-800"
                     >
-                      {formatValue(state[header as keyof StateMetric],state.location_id)}
+                      {formatValue(header,state[header as keyof StateMetric],state.location_id,)}
                     </td>
                   ))}
                 </tr>
