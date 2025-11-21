@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { locations} from './names';
 
 // --- Types ---
 // This type defines the structure of a single state object
 // returned from your API's `calculate_all_state_metrics` function.
 type StateMetric = {
+  location_id:number;
   state: string;
   avg_housing_price: number;
   monthly_mortgage_payment: number;
@@ -50,10 +52,11 @@ const MortgageCalculator = () => {
       const api = import.meta.env.VITE_BACKEND_URL;
       
       // Construct the query parameters
-
+      
       // Call the API endpoint you designed
       const response = await axios.get(`${api}/fixed_mortgage?income=${income}&down_payment=${downPayment}&loan_years=${loanYears}`);
       setResults(response.data);
+      console.log(response.data)
       const allStates = response.data || [];
       const affordable = allStates.filter((state:StateMetric) =>state.affordable == true)
       const unAffordable = allStates.filter((state:StateMetric) =>state.affordable == false)
@@ -71,7 +74,7 @@ const MortgageCalculator = () => {
   return (
     // Style: Using the same container style as DataForm.tsx
     <div className="p-8 bg-white rounded-lg shadow-md w-full">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Mortgage Calculator</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Where Can I Afford The Monthly Mortgage Payment?</h2>
       
       {/* Input Bar */}
       <form onSubmit={handleSubmit} className="space-y-4 mb-8">
@@ -114,7 +117,9 @@ const MortgageCalculator = () => {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="30">30 Years</option>
+              <option value="20">20 Years</option>
               <option value="15">15 Years</option>
+              <option value="10">10 Years</option>
             </select>
           </div>
 
@@ -156,10 +161,10 @@ const MortgageCalculator = () => {
 const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }) => {
 
   let headers = states.length > 0 ? Object.keys(states[0]) : [];
-  headers = headers.filter(h => h != "year" && h !="month")
+  headers = headers.filter(h => h != "year" && h !="month" && h !="location_id")
   
   // Helper to format values for display
-  const formatValue = (value: any) => {
+  const formatValue = (value: any,location_id:number) => {
     if (typeof value === 'boolean') {
       return value ? 'Yes' : 'No';
     }
@@ -172,8 +177,8 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
       return value.toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
     //format state names
-    if(typeof value == 'string'){
-
+    if(typeof value === 'string'){
+      return Object.keys(locations).find(name => locations[name] === location_id)
     }
     return value;
   };
@@ -209,7 +214,7 @@ const ResultsList = ({ title, states }: { title: string, states: StateMetric[] }
                       key={header}
                       className="px-6 py-4 whitespace-nowrap text-sm text-gray-800"
                     >
-                      {formatValue(state[header as keyof StateMetric])}
+                      {formatValue(state[header as keyof StateMetric],state.location_id)}
                     </td>
                   ))}
                 </tr>
