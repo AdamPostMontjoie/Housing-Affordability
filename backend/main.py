@@ -37,6 +37,7 @@ async def read_affordability(location_id: int):
                                     .execute()
     return affordability_response.data
 
+#gets the mortgage based on current data
 @app.get('/fixed_mortgage')
 async def fixed_mortgage(income:float,down_payment:int,loan_years:int):
     params_to_send = {
@@ -46,5 +47,7 @@ async def fixed_mortgage(income:float,down_payment:int,loan_years:int):
         }
     response = supabase.rpc('find_fixed_mortgage',params_to_send).execute()
     return response.data
+
+#create a new route to generate mortgage/agregate data based on predicted prices
 
 

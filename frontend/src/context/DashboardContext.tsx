@@ -79,7 +79,7 @@ const initialState: State = {
 // This one function handles all state changes
 function dashboardReducer(state: State, action: Action): State {
   switch (action.type) {
-    // --- UI Control Actions ---
+
     case 'SET_LOCATION_ID':
       return { ...state, locationId: action.payload };
     case 'SET_YEAR':
@@ -125,7 +125,6 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
       try {
         const api = import.meta.env.VITE_BACKEND_URL;
         const response = await axios.get(`${api}/location/?location_id=${id}`);
-        console.log(response.data)
         // Send a "letter" with the data when we get it
         dispatch({ type: 'FETCH_DATA_SUCCESS', payload: response.data });
 
