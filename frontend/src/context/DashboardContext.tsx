@@ -7,9 +7,7 @@ import {
 import type { ReactNode } from 'react';
 import axios from 'axios';
 
-// --- 1. Define Types ---
 
-// The shape of all our state, (UI controls + data) in one object
 interface State {
   locationId: number;
   yearValue: number;
@@ -20,12 +18,12 @@ interface State {
   displayRollingAverage: boolean;
   displayVolatility: boolean;
   
-  // We now include the data and loading state *inside* this object
+  
   isLoading: boolean;
-  locationData: any[] | undefined; // Using 'any' for simplicity
+  locationData: any[] | undefined; 
 }
 
-// All possible "letters" (actions) we can send
+
 type Action =
   | { type: 'SET_LOCATION_ID'; payload: number }
   | { type: 'SET_YEAR'; payload: number }
@@ -51,14 +49,12 @@ interface DashboardContextValue {
   dispatch: (action: Action) => void;
 }
 
-// --- 2. Create ONE Context ---
-// This is the "bucket" our components will reach into.
+
 const DashboardContext = createContext<DashboardContextValue | undefined>(
   undefined
 );
 
-// --- 3. Define Initial State ---
-// This is the one "control panel" object.
+
 const initialState: State = {
   // UI Controls
   locationId: 0,
@@ -75,11 +71,9 @@ const initialState: State = {
   locationData: undefined,
 };
 
-// --- 4. Create the Reducer (The "Worker") ---
-// This one function handles all state changes
+
 function dashboardReducer(state: State, action: Action): State {
   switch (action.type) {
-
     case 'SET_LOCATION_ID':
       return { ...state, locationId: action.payload };
     case 'SET_YEAR':
@@ -96,41 +90,36 @@ function dashboardReducer(state: State, action: Action): State {
       return { ...state, displayRollingAverage: !state.displayRollingAverage};
     case 'TOGGLE_VOLATILITY':
       return { ...state, displayVolatility: !state.displayVolatility};
-
-    // --- Data Fetching Actions ---
     case 'FETCH_DATA_START':
       return { ...state, isLoading: true, locationData: undefined };
     case 'FETCH_DATA_SUCCESS':
       return { ...state, isLoading: false, locationData: action.payload };
     case 'FETCH_DATA_ERROR':
-      return { ...state, isLoading: false, locationData: [] }; // Store empty array on error
+      return { ...state, isLoading: false, locationData: [] }; 
 
     default:
       throw new Error(`Unhandled action type`);
   }
 }
 
-// --- 5. Create the Provider Component ---
-// This component wraps your app.
 export function DashboardProvider({ children }: DashboardProviderProps) {
-  // All state is now managed by this single useReducer
+  // All state managed by useReducer
   const [state, dispatch] = useReducer(dashboardReducer, initialState);
 
-  // This effect runs when the provider is first mounted
-  // and whenever the 'locationId' in the state changes.
+  // effect runs when the provider is first mounted
   useEffect(() => {
     async function getLocationData(id: number) {
-      // Send a "letter" to the "mail slot" to tell the app we are loading
+    
       dispatch({ type: 'FETCH_DATA_START' });
       try {
         const api = import.meta.env.VITE_BACKEND_URL;
         const response = await axios.get(`${api}/location/?location_id=${id}`);
-        // Send a "letter" with the data when we get it
+        
         dispatch({ type: 'FETCH_DATA_SUCCESS', payload: response.data });
 
       } catch (error) {
         console.error('Failed to fetch location data', error);
-        // Send an "error" letter
+        
         dispatch({ type: 'FETCH_DATA_ERROR' });
       }
     }
@@ -138,8 +127,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
     getLocationData(state.locationId);
   }, [state.locationId]); // Re-run this whole function when locationId changes
 
-  // The value we provide is an object containing *both*
-  // the current state and the dispatch function (the mail slot).
+
   const value = { state, dispatch };
 
   return (
@@ -149,8 +137,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
   );
 }
 
-// --- 6. Create ONE Custom Hook ---
-// This is the only hook your other components will need to use.
+
 export function useDashboard() {
   const context = useContext(DashboardContext);
   if (context === undefined) {

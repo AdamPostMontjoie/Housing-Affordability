@@ -1,5 +1,3 @@
-
-
 const Navbar = ({toggle,setToggle}:{toggle:boolean, setToggle:(x:boolean)=> void}) => {
   return (
     <div className="w-full bg-white shadow-md border-b border-gray-200">
@@ -16,13 +14,13 @@ const Navbar = ({toggle,setToggle}:{toggle:boolean, setToggle:(x:boolean)=> void
                 href="#" 
                 className={`${!toggle ? 'border-blue-500 ' : 'border-transparent'}  text-gray-900 hover:border-blue-500  inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                Mortgage Calculator
+                Where Can I Afford A Home Today?
               </a>
               <a onClick={()=>setToggle(true)}
                 href="#" 
                 className={`${toggle ? 'border-blue-500 ' : 'border-transparent'} hover:border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                Dashboard
+                Can I Afford A Home In 5 Years?
               </a>
               <a 
                 href="#" 

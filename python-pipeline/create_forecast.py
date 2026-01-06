@@ -36,18 +36,7 @@ def create_forecast():
         m.add_regressor('rate')
         m.fit(loc_df)
         json_model = model_to_json(m)
-        # future = m.make_future_dataframe(periods=60,freq="MS")
-        # forecast = m.predict(future)
-        # #drop all past months
-        # forecast = forecast[forecast['ds'] > loc_df['ds'].max()]
-        # for _, row in forecast.iterrows():
-        #     predictions.append({
-        #         'location_id':loc_id,
-        #         'price': row['yhat'],
-        #         'lower':row['yhat_lower'],
-        #         'upper':row['yhat_upper'],
-        #         'date':row['ds'].strftime('%Y-%m-%d')
-        #     })
+        #encode model for storage
         file_bytes = json_model.encode('utf-8')
         try:
             result = supabase.storage \
@@ -61,11 +50,6 @@ def create_forecast():
 
         except Exception as e:
             print(f"failed to upload model {e}")
-    # try:
-    #     print(f"Uploading {len(predictions)} predictions")
-    #     supabase.table('fact_predictions').upsert(predictions).execute()
-    # except Exception as e:
-    #     print(e)
-    #     print(f"Failed to upload {len(predictions)} predictions")
+  
 create_forecast()
    
