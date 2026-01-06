@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from prophet import Prophet
 from prophet.serialize import model_to_json
 
+
 load_dotenv()
 
 url = os.getenv("SUPABASE_URL")
@@ -21,7 +22,7 @@ def create_forecast():
     df_mortgage = df_mortgage[['ds','rate']].copy()
 
     #store create and store 52 models in supabase bucket
-
+    predictions = []
     for loc_id in range(0,52):
         response = supabase.table('fact_housing').select('location_id, price, year, month').eq('location_id',loc_id).execute()
         df_housing = pd.DataFrame(response.data)
@@ -48,17 +49,15 @@ def create_forecast():
         #         'upper':row['yhat_upper'],
         #         'date':row['ds'].strftime('%Y-%m-%d')
         #     })
-        file_bytes = json_model.encode('utf-8')
         try:
-            result = supabase.storage \
+            supabase.storage \
             .from_('prophet-models') \
             .upload(
                 path=f'model_{loc_id}.json',
-                file=file_bytes,
+                file=json_model,
                 file_options={"upsert": "true"}
             )
-            print(result)
-
+            print(f"uploaded file to supabase")
         except Exception as e:
             print(f"failed to upload model {e}")
     # try:
