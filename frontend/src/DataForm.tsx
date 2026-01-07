@@ -20,6 +20,11 @@ const DataForm = () => {
     function onDate(){
       if(state.locationData){
         const data = state.locationData.find((obj:any) => obj.year == (state.yearValue +2000) && (obj.month == monthValue))
+        if (!data) {
+           setDataOnDate(null)
+           setAffordable("No Data")
+           return
+        }
         console.log(data)
         setDataOnDate(data)
         if(data.affordability_value != null){
