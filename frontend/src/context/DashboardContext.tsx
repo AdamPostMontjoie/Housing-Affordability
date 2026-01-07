@@ -113,7 +113,7 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
       dispatch({ type: 'FETCH_DATA_START' });
       try {
         const api = import.meta.env.VITE_BACKEND_URL;
-        const response = await axios.get(`${api}/location/?location_id=${id}`);
+        const response = await axios.get(`${api}/location?location_id=${id}`);
         
         dispatch({ type: 'FETCH_DATA_SUCCESS', payload: response.data });
 
