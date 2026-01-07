@@ -57,7 +57,7 @@ const DataForm = () => {
     <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-md">
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800">Housing Affordability</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">Housing Vs. Income Over Time</h2>
         
         <button
           type="button"

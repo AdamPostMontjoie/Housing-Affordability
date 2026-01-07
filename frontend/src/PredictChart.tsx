@@ -24,7 +24,7 @@ const PredictChart = () => {
   if (!predictionData) {
     return (
         <div className="flex items-center justify-center h-full border-2 border-dashed border-gray-300 rounded-lg p-12">
-            <p className="text-gray-500 text-lg">Enter your savings plan to see your future home</p>
+            <p className="text-gray-500 text-lg">Enter your savings plan to see when you can afford a home!</p>
         </div>
     );
   }

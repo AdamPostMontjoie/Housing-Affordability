@@ -24,29 +24,20 @@ const PredictionModal = ({ isOpen, onClose }:{isOpen:boolean,onClose:()=>void}) 
         </button>
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">About The Data</h2>
         <div className="space-y-4 text-sm text-gray-700">
-    
           <p>
-            The data for the real median household income was taken from the Federal Reserve Economic Data (FRED) distributed by the Federal Reserve Bank of St. Louis.
+            Predictions are done by 52 Meta Prophet models trained on the Zillow Home Value Index created by Zillow Research, with historical mortgage rate data distributed by the Federal Reserve Bank of St. Louis used as a regressor.
           </p>
           <p>
-            The data for the housing prices was taken from the Zillow Home Value Index (ZHVI) created by Zillow Research.
+            The models predict how prices will rise in a region of the US, using the mortgage rate to help the models determine market trends.
           </p>
-         <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">How is affordability calculated?</h3>
-            <p>
-              A house should cost 3 to 5 times your annual income to be considered affordable.
-            </p>
-            <p className="mt-2">
-              To calculate the affordability at a time, I compared the home value in an area with the median household income (Price / Income).
-            </p>
-          </div>
+         
          
 
           {/* links */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Data Links</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">The Data</h3>
             <ul className="list-disc list-inside space-y-1">
-              <li><a href="https://fred.stlouisfed.org/release/tables?rid=249&eid=259515#snid=259516" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">FRED Median Household Income</a></li>
+              <li><a href="https://fred.stlouisfed.org/series/MORTGAGE30US" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">FRED US Mortgage Average</a></li>
               <li><a href="https://www.zillow.com/research/data/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Zillow Home Value Index</a></li>
             </ul>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Personal Links</h3>

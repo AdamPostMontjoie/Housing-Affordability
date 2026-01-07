@@ -17,7 +17,7 @@ const PredictForm = () => {
     <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-md">
         <PredictionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800">Plan My Purchase</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">Can I Buy A Home In 5 Years?</h2>
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
@@ -29,10 +29,9 @@ const PredictForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         
-        {/* Location Dropdown */}
         <div>
           <label htmlFor="state-select" className="block text-sm font-medium text-gray-700">
-            Target Location
+            Location
           </label>
           <select
             id="state-select"
