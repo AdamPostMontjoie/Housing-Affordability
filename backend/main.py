@@ -4,13 +4,13 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import datetime
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import pandas
 from prophet.serialize import model_from_json
 
 allowed_origin_regex = r"^(https?://localhost:\d+|https://housing-affordability.*\.vercel\.app)$"
 
-load_dotenv()
+#load_dotenv()
 
 
 #supabase
@@ -132,7 +132,7 @@ async def predict_mortgage(location_id:int, income:float,starting_down_payment:f
 
     for i in range( len(forecast)):
         prediction = forecast.iloc[i]
-        down_payment = starting_down_payment + monthly_savings * (i-starting_month)
+        down_payment = starting_down_payment + monthly_savings * (i)
         principal = prediction['yhat'] - down_payment
         mortgage =  calculate_payment(principal,prediction['yhat'])
         

@@ -1,0 +1,11 @@
+docker build --platform linux/amd64 -t us-east1-docker.pkg.dev/housing-affordability-483610/housing-repo/backend .
+
+docker push us-east1-docker.pkg.dev/housing-affordability-483610/housing-repo/backend
+
+gcloud run deploy housing-backend \
+  --image us-east1-docker.pkg.dev/housing-affordability-483610/housing-repo/backend \
+  --platform managed \
+  --region us-east1 \
+  --allow-unauthenticated \
+  --memory 1Gi \
+  --set-env-vars SUPABASE_URL="https://scazzvmwfjjyrbmitrfx.supabase.co",SUPABASE_KEY="sb_secret_B4qyWkXFNv9uazN1bh0H7g_PWZ1GlfP"
