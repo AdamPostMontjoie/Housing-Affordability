@@ -142,7 +142,7 @@ async def predict_mortgage(location_id:int, income:float,starting_down_payment:f
                 result['price'] = prediction['yhat']
                 result['affordable'] = True
                 result['monthly-payment'] = mortgage[1]
-            
+                result['earliest-date'] = prediction['ds']
             if result['affordable'] and (lowest_payment is None or mortgage[1] < lowest_payment):
                 lowest_payment = mortgage[1]
                 result['purchase-date'] = prediction['ds']
