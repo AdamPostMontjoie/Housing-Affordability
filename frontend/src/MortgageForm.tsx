@@ -55,8 +55,7 @@ const MortgageCalculator = () => {
       
       // Call the API endpoint you designed
       const response = await axios.get(`${api}/fixed_mortgage?income=${income}&down_payment=${downPayment}&loan_years=${loanYears}`);
-      setResults(response.data);
-      console.log(response.data)
+      setResults(response.data)
       const allStates = response.data || [];
       const affordable = allStates.filter((state:StateMetric) =>state.affordable == true)
       const unAffordable = allStates.filter((state:StateMetric) =>state.affordable == false)
@@ -82,7 +81,7 @@ const MortgageCalculator = () => {
           
           {/* Input: Income */}
           <div className="flex-1">
-            <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income ($)</label>
+            <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income (Take Home)</label>
             <input
               id="income"
               type="number"

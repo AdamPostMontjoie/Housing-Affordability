@@ -1,6 +1,4 @@
-
-
-const Navbar = ({toggle,setToggle}:{toggle:boolean, setToggle:(x:boolean)=> void}) => {
+const Navbar = ({ view, setView }: { view: string, setView: (x: string) => void }) => {
   return (
     <div className="w-full bg-white shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,24 +9,27 @@ const Navbar = ({toggle,setToggle}:{toggle:boolean, setToggle:(x:boolean)=> void
               <h1 className="text-xl font-bold text-gray-800">Housing Affordability</h1>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <a onClick={() => setView('prediction')}
+                href="#" 
+                className={`${view === 'prediction' ? 'border-blue-500 ' : 'border-transparent'} hover:border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+              >
+                Can I Afford A Home In 5 Years?
+              </a>
               
-              <a onClick={()=>setToggle(false)}
+              
+              <a onClick={() => setView('calculator')}
                 href="#" 
-                className={`${!toggle ? 'border-blue-500 ' : 'border-transparent'}  text-gray-900 hover:border-blue-500  inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                className={`${view === 'calculator' ? 'border-blue-500 ' : 'border-transparent'}  text-gray-900 hover:border-blue-500  inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                Mortgage Calculator
+                Where Can I Afford A Home Today?
               </a>
-              <a onClick={()=>setToggle(true)}
+
+
+              <a onClick={() => setView('dashboard')}
                 href="#" 
-                className={`${toggle ? 'border-blue-500 ' : 'border-transparent'} hover:border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                className={`${view === 'dashboard' ? 'border-blue-500 ' : 'border-transparent'} hover:border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                Dashboard
-              </a>
-              <a 
-                href="#" 
-                className="border-transparent text-gray-900 hover:border-blue-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                About
+                Housing Vs. Income Over Time
               </a>
             </div>
           </div>
