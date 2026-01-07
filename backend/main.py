@@ -4,14 +4,13 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import datetime
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import pandas
 from prophet.serialize import model_from_json
 
+#load_dotenv()
+
 allowed_origin_regex = r"^(https?://localhost:\d+|https://housing-affordability.*\.vercel\.app)$"
-
-load_dotenv()
-
 
 #supabase
 url: str = os.environ.get("SUPABASE_URL")
@@ -22,17 +21,9 @@ prophet_models = {}
 #On startup
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Loading models into memory...")
-    for loc_id in range(0, 52):
-        try:
-            #Download prophet model from supabase bucket
-            response = supabase.storage.from_('prophet-models').download(f'model_{loc_id}.json')
-            prophet_models[loc_id] = model_from_json(response)
-            print(f"loaded model {loc_id}")
-        except Exception as e:
-            print(f"Could not load model {loc_id}: {e}")
+    # Lazy load enabled
     yield
-    print("Models loaded.")
+
 app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
@@ -73,6 +64,13 @@ async def fixed_mortgage(income:float,down_payment:int,loan_years:int):
 #pass starting year
 @app.get('/predict_mortgage')
 async def predict_mortgage(location_id:int, income:float,starting_down_payment:float,monthly_savings:float, mortgage_rate:float,loan_years:int):
+    if location_id not in prophet_models:
+        try:
+            response = supabase.storage.from_('prophet-models').download(f'model_{location_id}.json')
+            prophet_models[location_id] = model_from_json(response.decode('utf-8'))
+        except Exception as e:
+            return {"error": f"Could not load model {location_id}: {e}"}
+
     if mortgage_rate < 0:
         mortgage_rate = 0
     elif mortgage_rate > 100:
@@ -95,12 +93,18 @@ async def predict_mortgage(location_id:int, income:float,starting_down_payment:f
         'price':None,
         'affordable':False,
         'monthly-payment':None,
+        'earliest-date':None,
         'forecast':None
     }
 
     lowest_payment = None
     tax_response = supabase.table('fact_property_tax').select('tax_rate').eq('location_id',location_id).execute()
-    monthly_tax_rate = tax_response.data[0]['tax_rate'] / 100 / 12
+    
+    if not tax_response.data:
+        monthly_tax_rate = 0.01 / 12
+    else:
+        monthly_tax_rate = tax_response.data[0]['tax_rate'] / 100 / 12
+
     monthly_income = income / 12
     monthly_interest = mortgage_rate / 100 / 12
     n_payments = loan_years * 12
@@ -132,12 +136,13 @@ async def predict_mortgage(location_id:int, income:float,starting_down_payment:f
         
 
         if mortgage[1] < (monthly_income * 0.33):
-            if not result['affordable']:
+            if not result['affordable'] and result['earliest-date'] is None:
                 result['purchase-date'] = prediction['ds']
                 result['price'] = prediction['yhat']
                 result['affordable'] = True
+                result['earliest-date'] = prediction['ds']
                 result['monthly-payment'] = mortgage[1]
-            
+
             if result['affordable'] and (lowest_payment is None or mortgage[1] < lowest_payment):
                 lowest_payment = mortgage[1]
                 result['purchase-date'] = prediction['ds']
@@ -150,5 +155,5 @@ async def predict_mortgage(location_id:int, income:float,starting_down_payment:f
             result['price'] = prediction['yhat']
             result['monthly-payment'] = mortgage[1]
         
-    result['forecast'] = forecast
+    result['forecast'] = forecast.to_dict(orient='records')
     return result
