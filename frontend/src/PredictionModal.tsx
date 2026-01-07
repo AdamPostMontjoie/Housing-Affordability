@@ -2,7 +2,7 @@
 // Define the props the modal will accept
 
 
-const InfoModal = ({ isOpen, onClose }:{isOpen:boolean,onClose:()=>void}) => {
+const PredictionModal = ({ isOpen, onClose }:{isOpen:boolean,onClose:()=>void}) => {
   if (!isOpen) {
     return null;
   }
@@ -70,4 +70,4 @@ const InfoModal = ({ isOpen, onClose }:{isOpen:boolean,onClose:()=>void}) => {
   );
 };
 
-export default InfoModal;
+export default PredictionModal;

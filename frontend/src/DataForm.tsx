@@ -58,7 +58,7 @@ const DataForm = () => {
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-800">Housing Affordability</h2>
-        {/* 5. Add a button to open the modal */}
+        
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}

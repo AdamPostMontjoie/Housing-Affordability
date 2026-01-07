@@ -81,7 +81,7 @@ const MortgageCalculator = () => {
           
           {/* Input: Income */}
           <div className="flex-1">
-            <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income ($)</label>
+            <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income (Take Home)</label>
             <input
               id="income"
               type="number"
