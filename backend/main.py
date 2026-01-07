@@ -99,7 +99,8 @@ async def predict_mortgage(location_id:int, income:float,starting_down_payment:f
         'price':None,
         'affordable':False,
         'monthly-payment':None,
-        'forecast':None
+        'forecast':None,
+        'earliest-date':None
     }
 
     lowest_payment = None
